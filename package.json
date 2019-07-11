@@ -1,0 +1,35 @@
+{
+  "scripts": {
+    "clean-babel-cache": "rimraf ./node_modules/.cache/babel-loader && rimraf ./node_modules/.cache/@babel",
+    "dev": "yarn clean-babel-cache && babel-node server/index.js --inspect --max-old-space-size=4096 %NODE_DEBUG_OPTION%",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production babel-node server/index.js",
+    "lintfix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@babel/node": "^7.5.0",
+    "@babel/plugin-transform-async-to-generator": "^7.5.0",
+    "@zeit/next-sass": "^1.0.0",
+    "bootstrap": "4.3.1",
+    "classnames": "^2.2.6",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "lodash": "^4.17.14",
+    "nanoid": "^2.0.3",
+    "nanoid-dictionary": "^2.0.0",
+    "next": "8.1.0",
+    "node-sass": "^4.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
+    "rimraf": "^2.6.3"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "fp"
+  ],
+  "extends": [
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "env": {
+    "jest": true,
+    "browser": true
+  },
+  "rules": {
+    "global-require": 0,
+    "import/first": 0,
+    "import/no-duplicates": 2,
+    "import/prefer-default-export": 0,
+    "jsx-a11y/html-has-lang": 0,
+    "no-confusing-arrow": 0,
+    "no-duplicate-imports": 0,
+    "no-nested-ternary": 0,
+    "no-param-reassign": "error",
+    "no-shadow": 0,
+    "react/jsx-uses-react": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/forbid-prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-indent": 0,
+    "react/no-unused-prop-types": 0,
+    "react/prop-types": 0,
+    "no-underscore-dangle": [
+      2,
+      {
+        "allow": [
+          "__internalId",
+          "__checked",
+          "__disabled",
+          "__NEXT_DATA__"
+        ]
+      }
+    ],
+    "radix": [
+      2,
+      "as-needed"
+    ],
+    "fp/no-mutating-assign": 2,
+    "linebreak-style": 0,
+    "arrow-body-style": 0,
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "eqeqeq": [
+      "error",
+      "always",
+      {
+        "null": "ignore"
+      }
+    ],
+    "no-lonely-if": 0,
+    "prefer-destructuring": 0,
+    "function-paren-newline": 0,
+    "object-curly-newline": 0,
+    "react/require-default-props": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/no-noninteractive-tabindex": [
+      "error",
+      {
+        "tags": [
+          "div"
+        ],
+        "roles": []
+      }
+    ],
+    "camelcase": 0,
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "./",
+          "./client/"
+        ]
+      }
+    }
+  }
+}
