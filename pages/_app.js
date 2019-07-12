@@ -1,5 +1,7 @@
 import '../styles/style.scss';
+import { ThemeProvider } from '@material-ui/styles';
 import App, { Container } from 'next/app';
+import theme from '../components/theme';
 
 class MyApp extends App {
   static async getInitialProps(context) {
@@ -21,9 +23,11 @@ class MyApp extends App {
     } = this.props;
     return (
       <Container>
-        <Component
-          {...pageProps}
-        />
+        <ThemeProvider theme={theme}>
+          <Component
+            {...pageProps}
+          />
+        </ThemeProvider>
       </Container>
     );
   }

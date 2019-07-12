@@ -13,6 +13,10 @@ app.prepare().then(() => {
 
   setHeadersMiddleware(server);
 
+  server.post('/parse-static', (req, res, next) => {
+    console.log('should parse static here');
+  });
+
   server.get('*', (req, res, next) => {
     try {
       return handle(req, res);
