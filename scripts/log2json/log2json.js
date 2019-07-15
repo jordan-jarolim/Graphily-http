@@ -85,6 +85,7 @@ const log2json = async ({
   // console.log(lines.filter((ln) => ln.request.method.match(/^GET/gi)).length);
   // console.log(lines.filter((ln) => ln.request.method.match(/^POST/gi)).length);
   // console.log(lines.filter((ln) => ln.request.method.match(/^HEAD/gi)).length);
+  // console.log(lines.filter((ln) => ln.request.url.match(/\s/gi)));
 };
 
 
