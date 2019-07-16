@@ -5,6 +5,6 @@ const log2json = require('./log2json');
   const resultPath = process.argv[3];
   await log2json({
     logPath,
-    resultPath
+    resultPath,
   });
 })();
