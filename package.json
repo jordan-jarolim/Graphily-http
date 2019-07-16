@@ -19,6 +19,8 @@
     "@material-ui/icons": "^4.2.1",
     "@material-ui/styles": "^4.2.0",
     "@zeit/next-sass": "^1.0.0",
+    "babel-jest": "^24.8.0",
+    "babel-plugin-rewire": "^1.2.0",
     "bootstrap": "4.3.1",
     "classnames": "^2.2.6",
     "express": "^4.17.1",

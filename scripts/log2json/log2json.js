@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 const { promisify } = require('util');
 const fs = require('fs');
@@ -13,73 +14,36 @@ const writeFileAsync = promisify(fs.writeFile);
 const get = notALodashGet;
 
 /**
- * Log to Json module.
- * @module log2json
- */
-
-/**
- * @typedef {Object} Timestamp
- * @property {string} day
- * @property {string} hour
- * @property {string} minute
- * @property {string} second
- */
-
-/**
- * @typedef {Object} Request
- * @property {string} method - Request method (GET|POST|HEAD)
- * @property {string} url - Requested url
- * @property {string} protocol - Request protocol
- * @property {string} protocol_version - Request protocol version
- */
-
-/**
  * Get host from log line.
- *
  * @param {string|array} lineArr - Log line as string or array
  * @return {string} Request host
- *
- * @example
- *
- *     getHost('141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497')
+ * @private
  */
-const getHost = (lineArr) => get(makeArr(lineArr), 0, '');
+const _getHost = (lineArr) => get(makeArr(lineArr), 0, '');
 
 /**
  * Get response code from log line.
- *
  * @param {string|array} lineArr - Log line as string or array
  * @return {string} Request res code
- *
- * @example
- *
- *     getResCode('141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497')
+ * @private
  */
-const getResCode = (lineArr) => get(makeArr(lineArr), lineArr.length - 2, '');
+const _getResCode = (lineArr) => get(makeArr(lineArr), lineArr.length - 2, '');
 
 /**
  * Get response byte length from log line.
- *
  * @param {string|array} lineArr - Log line as string or array
  * @return {string} Request byteLength
- *
- * @example
- *
- *     getByteLength('141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497')
+ * @private
  */
-const getByteLength = (lineArr) => get(makeArr(lineArr), lineArr.length - 1, '');
+const _getByteLength = (lineArr) => get(makeArr(lineArr), lineArr.length - 1, '');
 
 /**
  * Parse request represented as string.
- *
  * @param {string|array} lineArr - Log line as string or array
- * @return {Timestamp} parsed timestamp
- *
- * @example
- *
- *     getRequest('141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497')
+ * @return {object} parsed timestamp
+ * @private
  */
-const getDatetime = (ln) => {
+const _getDatetime = (ln) => {
   const lineArr = makeArr(ln);
   const dateTimeStr = get(lineArr, 1, ''); // const dateTimeStr = get(line.match(/(?<=^.*\s\[)[\d:]*(?=\]\s)/), 0, '');
   const dateTimeArr = dateTimeStr.split(':').map((stamp) => stamp.replace(/\[|\]/, ''));
@@ -93,15 +57,11 @@ const getDatetime = (ln) => {
 
 /**
  * Parse request represented as string.
- *
  * @param {string|array} lineArr - Log line as string or array
- * @return {Request} parsed request
- *
- * @example
- *
- *     getRequest('141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497')
+ * @return {object} parsed request
+ * @private
  */
-const getRequest = (lineArr) => {
+const _getRequest = (lineArr) => {
   const shallowCpy = [...makeArr(lineArr)];
   shallowCpy.splice(0, 2); // get rid of domain + timestamp
   shallowCpy.splice(-2, 2); // get rid of status + size
@@ -136,15 +96,11 @@ const getRequest = (lineArr) => {
 
 /**
  * Read inupt Http Log from file, parse it and create new json file.
- *
  * @param {object} paths - Input and output paths
  * @param {string} logPath - Input log path
  * @param {string} resultPath - Output json path
  * @return {undefined}
- *
- * @example
- *
- *     log2json({logPath: './input.txt', resultPath: './output.json'})
+ * @public
  */
 const log2json = async ({
   logPath = '../../static/epa-http.txt',
@@ -163,11 +119,11 @@ const log2json = async ({
   const lines = normalizedData.split('\n').filter((ln) => ln.length).map((ln) => {
     const lineArr = ln.split(' ');
     return {
-      host: getHost(lineArr),
-      datetime: getDatetime(lineArr),
-      request: getRequest(lineArr),
-      response_code: getResCode(lineArr),
-      document_size: getByteLength(lineArr),
+      host: _getHost(lineArr),
+      datetime: _getDatetime(lineArr),
+      request: _getRequest(lineArr),
+      response_code: _getResCode(lineArr),
+      document_size: _getByteLength(lineArr),
     };
   });
   try {
@@ -179,10 +135,4 @@ const log2json = async ({
   console.log(`Log ${absoluteLogPath} was succesfully parsed and saved as ${absoluteResultPath}`);
 };
 
-
 module.exports = log2json;
-module.exports.getHost = getHost;
-module.exports.getDatetime = getDatetime;
-module.exports.getRequest = getRequest;
-module.exports.getResCode = getResCode;
-module.exports.getByteLength = getByteLength;

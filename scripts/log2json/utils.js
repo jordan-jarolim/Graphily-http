@@ -1,13 +1,11 @@
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
+
 /**
  * Logs normalization results.
- *
  * @param {string} input - String to be normalized
  * @param {string} output - Normalized string
  * @return {undefined}
- *
- * @example
- *
- *     logNormalizationOutput('The quick brown', 'fox jumps over the lazy dog')
  */
 const logNormalizationOutput = (input, output) => {
   const inputCharset = [];
@@ -39,13 +37,8 @@ const logNormalizationOutput = (input, output) => {
 
 /**
  * Filter all non-standard characters.
- *
  * @param {string} input - String to be normalized
  * @return {string} normalized string
- *
- * @example
- *
- *     normalizeData('The quick brown fox jumps over the lazy dog')
  */
 const normalizeData = (input) => {
   let characterSet = '';
@@ -55,55 +48,40 @@ const normalizeData = (input) => {
   }
   // note double-backslash "\\\\" - we need this to be able to create dynamic regex from var
   const regexCompliantAsVar = characterSet.replace(/[/\\^$*+?.()|[\]{}]/g, '\\\\$&');
-
   const regex = new RegExp(`[^${regexCompliantAsVar}\n]`, 'gi');
-
   const output = input.replace(regex, '');
-
   logNormalizationOutput(input, output);
-
   return output;
 };
 
 /**
  * Split string into array if necessary. Leave input array untouched.
- *
  * @param {string|array} input - String to be split
  * @return {array} array made of string
- *
- * @example
- *
- *     makeArr('The quick brown fox jumps over the lazy dog')
  */
 const makeArr = (strOrArr) => Array.isArray(strOrArr) ? strOrArr : strOrArr.split(' ');
 
 /**
  * Mock lodash get function - no need of installation any additional packages then.
- *
  * @param {object} object - Object to get property of
  * @param {string|array} path - path to property
  * @param {*} defaultVal - default value
-
  * @return {*} property value or default value
- *
- * @example
- *
- *     notALodashGet({coconut: true}, 'coconut', 'kiwi')
  */
 const notALodashGet = (object, path, defaultVal) => {
   const _path = Array.isArray(path)
     ? path
-    : path.toString().split('.').filter(i => i.length)
+    : path.toString().split('.').filter((i) => i.length);
 
   if (!_path.length) {
-    return object === undefined ? defaultVal : object
+    return object === undefined ? defaultVal : object;
   }
   if (!object) {
     return defaultVal;
   }
 
-  return notALodashGet(object[_path.shift()], _path, defaultVal)
-}
+  return notALodashGet(object[_path.shift()], _path, defaultVal);
+};
 
 module.exports = {
   normalizeData,

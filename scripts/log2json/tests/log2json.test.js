@@ -1,14 +1,14 @@
+/* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
 const log2json = require('../log2json');
 
-const {
-  getHost,
-  getDatetime,
-  getRequest,
-  getResCode,
-  getByteLength,
-} = log2json;
+const { __get__: rewireGet } = log2json;
+const getHost = rewireGet('_getHost');
+const getDatetime = rewireGet('_getDatetime');
+const getRequest = rewireGet('_getRequest');
+const getResCode = rewireGet('_getResCode');
+const getByteLength = rewireGet('_getByteLength');
 
 const inputData = [
   '141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497',
@@ -115,7 +115,7 @@ describe('log2json', () => {
     try {
       fs.unlinkSync(path.resolve(__dirname, './result.json'));
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
     expect(JSON.parse(jsonData)).toEqual([
       {
