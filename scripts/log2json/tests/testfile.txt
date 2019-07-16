@@ -1,0 +1,8 @@
+141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497
+query2.lycos.cs.cmu.edu [29:23:53:36] "/Consumer.html HTTP/1.0" 200 1325
+tanuki.twics.com [29:23:53:53] "GET /News.html" 200 1014
+wpbfl2-45.gate.net [29:23:54:15] "GET / HTTP/1.0" 200 4889
+wpbfl2-45.gate.net [29:23:54:16] "GET /icons/circle_ logo_small.gif HTTP/1.0" - 2624
+wpbfl2-45.gate.net [29:23:54:18] "GET /logos/small_gopher.gif HTTP/1.0" 200 -
+140.112.68.165 [29:23:54:19] "GET /logos/us-flag.gif HTTP/1.0="=""" 200 2788
+wpbfl2-45.gate.net [29:23:54:19] "GET /logos/small_ftp.gif HTTP/1.0"  -

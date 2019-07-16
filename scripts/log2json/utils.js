@@ -44,8 +44,12 @@ const normalizeData = (input) => {
   return output;
 };
 
-module.exports = normalizeData;
+const makeArr = (strOrArr) => Array.isArray(strOrArr) ? strOrArr : strOrArr.split(' ');
 
+module.exports = {
+  normalizeData,
+  makeArr,
+};
 
 // const dynamicRegex = ({
 //   regex,

@@ -2,14 +2,17 @@ const { promisify } = require('util');
 const fs = require('fs');
 const path = require('path');
 const get = require('lodash/get');
-
-const normalizeData = require('./utils');
+const {
+  normalizeData,
+  makeArr,
+} = require('./utils');
 
 const readFileAsync = promisify(fs.readFile);
-// const writeFileAsync = promisify(fs.writeFile);
+const writeFileAsync = promisify(fs.writeFile);
 
-const getDatetime = (lineArr) => {
+const getDatetime = (ln) => {
   // const dateTimeStr = get(line.match(/(?<=^.*\s\[)[\d:]*(?=\]\s)/), 0, '');
+  const lineArr = makeArr(ln);
   const dateTimeStr = get(lineArr, 1, '');
   const dateTimeArr = dateTimeStr.split(':').map((stamp) => stamp.replace(/\[|\]/, ''));
   return {
@@ -21,7 +24,7 @@ const getDatetime = (lineArr) => {
 };
 
 // const getHost = (line) => get(line.match(/^[^\s]+/), 0, '');
-const getHost = (lineArr) => get(lineArr, 0, '');
+const getHost = (lineArr) => get(makeArr(lineArr), 0, '');
 
 const getRequest = (lineArr) => {
   const shallowCpy = [...lineArr];
@@ -59,17 +62,24 @@ const getRequest = (lineArr) => {
   };
 };
 
-const getResCode = (lineArr) => get(lineArr, lineArr.length - 2, '');
+const getResCode = (lineArr) => get(makeArr(lineArr), lineArr.length - 2, '');
 
-const getByteLength = (lineArr) => get(lineArr, lineArr.length - 1, '');
+const getByteLength = (lineArr) => get(makeArr(lineArr), lineArr.length - 1, '');
 
 const log2json = async ({
   logPath = '../../static/epa-http.txt',
+  resultPath = '../../static/result.json',
 }) => {
-  const absolutePath = path.resolve(__dirname, logPath);
-  const logData = await readFileAsync(absolutePath, 'binary');
+  const absoluteLogPath = path.resolve(__dirname, logPath);
+  const absoluteResultPath = path.resolve(__dirname, resultPath);
+  let logData = '';ąą
+  try {
+    logData = await readFileAsync(absoluteLogPath, 'binary');
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
   const normalizedData = normalizeData(logData);
-
   const lines = normalizedData.split('\n').filter((ln) => ln.length).map((ln) => {
     const lineArr = ln.split(' ');
     return {
@@ -81,12 +91,19 @@ const log2json = async ({
     };
   });
 
-  // console.log(lines.filter((ln) => ln.request.method.match(/^((?!(GET|POST|HEAD)).*)/gi)).length);
-  // console.log(lines.filter((ln) => ln.request.method.match(/^GET/gi)).length);
-  // console.log(lines.filter((ln) => ln.request.method.match(/^POST/gi)).length);
-  // console.log(lines.filter((ln) => ln.request.method.match(/^HEAD/gi)).length);
-  // console.log(lines.filter((ln) => ln.request.url.match(/\s/gi)));
+  try {
+    await writeFileAsync(absoluteResultPath, JSON.stringify(lines));
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+  console.log(`Log ${absoluteLogPath} was succesfully parsed and saved as ${absoluteResultPath}`);
 };
 
 
 module.exports = log2json;
+module.exports.getHost = getHost;
+module.exports.getDatetime = getDatetime;
+module.exports.getRequest = getRequest;
+module.exports.getResCode = getResCode;
+module.exports.getByteLength = getByteLength;
