@@ -1,3 +1,14 @@
+/**
+ * Logs normalization results.
+ *
+ * @param {string} input - String to be normalized
+ * @param {string} output - Normalized string
+ * @return {undefined}
+ *
+ * @example
+ *
+ *     logNormalizationOutput('The quick brown', 'fox jumps over the lazy dog')
+ */
 const logNormalizationOutput = (input, output) => {
   const inputCharset = [];
   const outputCharset = [];
@@ -26,6 +37,16 @@ const logNormalizationOutput = (input, output) => {
   `);
 };
 
+/**
+ * Filter all non-standard characters.
+ *
+ * @param {string} input - String to be normalized
+ * @return {string} normalized string
+ *
+ * @example
+ *
+ *     normalizeData('The quick brown fox jumps over the lazy dog')
+ */
 const normalizeData = (input) => {
   let characterSet = '';
   // will contain all url-compliant chars (https://tools.ietf.org/html/rfc3986#section-2.3)
@@ -44,37 +65,48 @@ const normalizeData = (input) => {
   return output;
 };
 
+/**
+ * Split string into array if necessary. Leave input array untouched.
+ *
+ * @param {string|array} input - String to be split
+ * @return {array} array made of string
+ *
+ * @example
+ *
+ *     makeArr('The quick brown fox jumps over the lazy dog')
+ */
 const makeArr = (strOrArr) => Array.isArray(strOrArr) ? strOrArr : strOrArr.split(' ');
+
+/**
+ * Mock lodash get function - no need of installation any additional packages then.
+ *
+ * @param {object} object - Object to get property of
+ * @param {string|array} path - path to property
+ * @param {*} defaultVal - default value
+
+ * @return {*} property value or default value
+ *
+ * @example
+ *
+ *     notALodashGet({coconut: true}, 'coconut', 'kiwi')
+ */
+const notALodashGet = (object, path, defaultVal) => {
+  const _path = Array.isArray(path)
+    ? path
+    : path.toString().split('.').filter(i => i.length)
+
+  if (!_path.length) {
+    return object === undefined ? defaultVal : object
+  }
+  if (!object) {
+    return defaultVal;
+  }
+
+  return notALodashGet(object[_path.shift()], _path, defaultVal)
+}
 
 module.exports = {
   normalizeData,
   makeArr,
+  notALodashGet,
 };
-
-// const dynamicRegex = ({
-//   regex,
-//   flags = 'gi',
-//   decorate = null,
-// }) => {
-//   // note double-backslash "\\\\" - we need this to be able to create dynamic regex from var
-//   let regexCompliantAsVar = regex.replace(/[/\\^$*+?.()|[\]{}]/g, '\\\\$&');
-//   if (decorate) {
-//     regexCompliantAsVar = decorate(regexCompliantAsVar);
-//   }
-//   return new RegExp(`${regexCompliantAsVar}`, flags);
-// }
-
-// const normalizeData = (input) => {
-//   let characterSet = '';
-//   // will contain all url-compliant chars (https://tools.ietf.org/html/rfc3986#section-2.3)
-//   for (let i = 32; i <= 127; i += 1) {
-//     characterSet += String.fromCharCode(i);
-//   }
-//   const regexCompliantAsVar = dynamicRegex({ regex: characterSet, flags: 'gi', decorate: (regex) => `[^${regex}\n]` });
-
-//   const output = input.replace(regexCompliantAsVar, '');
-
-//   // logNormalizationOutput(input, output);
-
-//   return output;
-// };

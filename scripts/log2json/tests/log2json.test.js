@@ -1,10 +1,14 @@
+const fs = require('fs');
+const path = require('path');
+const log2json = require('../log2json');
+
 const {
   getHost,
   getDatetime,
   getRequest,
   getResCode,
   getByteLength,
-} = require('../log2json');
+} = log2json;
 
 const inputData = [
   '141.243.1.172 [29:23:53:25] "GET /Software.html HTTP/1.0" 200 1497',
@@ -104,5 +108,144 @@ describe('log2json', () => {
   test('getByteLength input arr', () => {
     const byteLengths = inputData.map((ln) => getByteLength(ln.split(' ')));
     expect(byteLengths).toEqual(['1497', '1325', '1014', '4889', '2624', '-', '2788', '-']);
+  });
+  test('main module', async () => {
+    await log2json({ logPath: './tests/testfile.txt', resultPath: './tests/result.json' });
+    const jsonData = fs.readFileSync(path.resolve(__dirname, './result.json'), 'binary');
+    try {
+      fs.unlinkSync(path.resolve(__dirname, './result.json'));
+    } catch (err) {
+      console.error(err);
+    }
+    expect(JSON.parse(jsonData)).toEqual([
+      {
+        host: '141.243.1.172',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '53',
+          second: '25',
+        },
+        request: {
+          method: 'GET',
+          url: '/Software.html',
+          protocol: 'HTTP',
+          protocol_version: '1.0',
+        },
+        response_code: '200',
+        document_size: '1497',
+      }, {
+        host: 'query2.lycos.cs.cmu.edu',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '53',
+          second: '36',
+        },
+        request: {
+          method: '-',
+          url: '"/Consumer.html',
+          protocol: 'HTTP',
+          protocol_version: '1.0',
+        },
+        response_code: '200',
+        document_size: '1325',
+      }, {
+        host: 'tanuki.twics.com',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '53',
+          second: '53',
+        },
+        request: {
+          method: 'GET',
+          url: '/News.html"',
+          protocol: '-',
+          protocol_version: '-',
+        },
+        response_code: '200',
+        document_size: '1014',
+      }, {
+        host: 'wpbfl2-45.gate.net',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '54',
+          second: '15',
+        },
+        request: {
+          method: 'GET',
+          url: '/',
+          protocol: 'HTTP',
+          protocol_version: '1.0',
+        },
+        response_code: '200',
+        document_size: '4889',
+      }, {
+        host: 'wpbfl2-45.gate.net',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '54',
+          second: '16',
+        },
+        request: {
+          method: 'GET',
+          url: '/icons/circle_ logo_small.gif',
+          protocol: 'HTTP',
+          protocol_version: '1.0',
+        },
+        response_code: '-',
+        document_size: '2624',
+      }, {
+        host: 'wpbfl2-45.gate.net',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '54',
+          second: '18',
+        },
+        request: {
+          method: 'GET',
+          url: '/logos/small_gopher.gif',
+          protocol: 'HTTP',
+          protocol_version: '1.0',
+        },
+        response_code: '200',
+        document_size: '-',
+      }, {
+        host: '140.112.68.165',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '54',
+          second: '19',
+        },
+        request: {
+          method: 'GET',
+          url: '/logos/us-flag.gif',
+          protocol: 'HTTP',
+          protocol_version: '1.0',
+        },
+        response_code: '200',
+        document_size: '2788',
+      }, {
+        host: 'wpbfl2-45.gate.net',
+        datetime: {
+          day: '29',
+          hour: '23',
+          minute: '54',
+          second: '19',
+        },
+        request: {
+          method: 'GET',
+          url: '/logos/small_ftp.gif',
+          protocol: 'HTTP',
+          protocol_version: '1.0',
+        },
+        response_code: '',
+        document_size: '-',
+      }]);
   });
 });

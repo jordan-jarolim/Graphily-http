@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {},
+  "exclude": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/tmp",
+    "**/node_modules",
+    "**/bower_components",
+    "**/dist",
+    "**/.next"
+  ]
+}
