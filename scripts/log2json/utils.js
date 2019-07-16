@@ -48,7 +48,7 @@ const normalizeData = (input) => {
   }
   // note double-backslash "\\\\" - we need this to be able to create dynamic regex from var
   const regexCompliantAsVar = characterSet.replace(/[/\\^$*+?.()|[\]{}]/g, '\\\\$&');
-  const regex = new RegExp(`[^${regexCompliantAsVar}\n]`, 'gi');
+  const regex = new RegExp(`[^${regexCompliantAsVar}\n]`, 'gi'); // all except charset + newline
   const output = input.replace(regex, '');
   logNormalizationOutput(input, output);
   return output;

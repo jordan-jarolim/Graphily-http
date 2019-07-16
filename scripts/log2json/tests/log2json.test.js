@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const log2json = require('../log2json');
 
+// Helps us to test privately scoped functions
 const { __get__: rewireGet } = log2json;
 const getHost = rewireGet('_getHost');
 const getDatetime = rewireGet('_getDatetime');
