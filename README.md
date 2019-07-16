@@ -1,4 +1,4 @@
-# Http log to json to graph
+# Http Log to Json to Graph
 
 ## Used libs
 - nextjs

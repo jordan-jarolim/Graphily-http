@@ -23,23 +23,29 @@ const _getHost = (lineArr) => get(makeArr(lineArr), 0, '');
 
 /**
  * Get response code from log line.
- * @param {string|array} lineArr - Log line as string or array
+ * @param {string|array} ln - Log line as string or array
  * @return {string} Request res code
  * @private
  */
-const _getResCode = (lineArr) => get(makeArr(lineArr), lineArr.length - 2, '');
+const _getResCode = (ln) => {
+  const lineArr = makeArr(ln);
+  return get(lineArr, lineArr.length - 2, '');
+};
 
 /**
  * Get response byte length from log line.
- * @param {string|array} lineArr - Log line as string or array
+ * @param {string|array} ln - Log line as string or array
  * @return {string} Request byteLength
  * @private
  */
-const _getByteLength = (lineArr) => get(makeArr(lineArr), lineArr.length - 1, '');
+const _getByteLength = (ln) => {
+  const lineArr = makeArr(ln);
+  return get(lineArr, lineArr.length - 1, '');
+};
 
 /**
- * Parse request represented as string.
- * @param {string|array} lineArr - Log line as string or array
+ * Get response timestamp from log line.
+ * @param {string|array} ln - Log line as string or array
  * @return {object} parsed timestamp
  * @private
  */
@@ -56,13 +62,13 @@ const _getDatetime = (ln) => {
 };
 
 /**
- * Parse request represented as string.
- * @param {string|array} lineArr - Log line as string or array
+ * Parse request represented as string from log line.
+ * @param {string|array} ln - Log line as string or array
  * @return {object} parsed request
  * @private
  */
-const _getRequest = (lineArr) => {
-  const shallowCpy = [...makeArr(lineArr)];
+const _getRequest = (ln) => {
+  const shallowCpy = [...makeArr(ln)];
   shallowCpy.splice(0, 2); // get rid of domain + timestamp
   shallowCpy.splice(-2, 2); // get rid of status + size
 
@@ -95,7 +101,7 @@ const _getRequest = (lineArr) => {
 };
 
 /**
- * Read inupt Http Log from file, parse it and create new json file.
+ * Read input Http log from file, parse it and create new json file.
  * @param {object} paths - Input and output paths
  * @param {string} logPath - Input log path
  * @param {string} resultPath - Output json path
