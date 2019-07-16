@@ -1,6 +1,6 @@
 const LINKS = [
   {
-    label: 'Import',
+    label: 'Parse',
     href: '/',
   },
   {

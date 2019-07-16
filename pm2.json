@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "Http2Graph",
+      "script": "yarn",
+      "args": "start"
+    }
+  ]
+}

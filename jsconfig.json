@@ -1,5 +1,7 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "baseUrl": "./",
+  },
   "exclude": [
     "**/.git",
     "**/.svn",
