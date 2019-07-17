@@ -18,7 +18,7 @@ Result will be saved as `result.json` in `./static` folder. You can also specify
 ```
 node ./scripts/log2json/l2j-cli.js ../../static/epa-http.txt ../../static/result.json
 ```
-### Web app
+### Web application
 You can run as standard js-based application (see package.json) or you can use prepared docker image.
 Build docker image first:
 ```
