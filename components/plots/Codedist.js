@@ -3,7 +3,7 @@ import {
 } from 'recharts';
 import Plots from './Plots';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#666', '#8884d8', '#FF3E27', '#6BFFA4'];
 const Codedist = () => {
   return (
     <Plots
@@ -22,6 +22,7 @@ const Codedist = () => {
               fill="#8884d8"
               dataKey="req"
               nameKey="code"
+              label
             >
               {
                 formatData.map((entry, index) => <Cell key={`cell-${entry}`} fill={COLORS[index % COLORS.length]} />)

@@ -19,8 +19,8 @@ const Methoddist = () => {
         ];
         return (
           <BarChart data={formatData}>
-            <XAxis dataKey="method" />
-            <YAxis />
+            <XAxis dataKey="method" label={{ value: 'Methods', position: 'insideBottomRight', offset: 0 }} />
+            <YAxis label={{ value: 'Requests', angle: -90, position: 'insideLeft' }} />
             <Tooltip />
             <Legend />
             <Bar dataKey="req" fill="#ffc107" />

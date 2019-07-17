@@ -16,7 +16,7 @@ const Reqpermin = () => {
             data={data}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="min" label={{ value: 'Minutes', position: 'insideBottomRight', offset: 0 }} />
+            <XAxis dataKey="min" label={{ value: 'Minutes', position: 'insideBottomRight', offset: 0 }} minTickGap={20} />
             <YAxis label={{ value: 'Requests', angle: -90, position: 'insideLeft' }} />
             <Tooltip />
             <Area type="monotone" dataKey="rpm" stroke="#007bff" fill="#007bff" />

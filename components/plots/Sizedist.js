@@ -19,7 +19,7 @@ const Sizedist = () => {
             data={formatData}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="size" label={{ value: 'Response body size', position: 'insideBottomRight', offset: 0 }} />
+            <XAxis dataKey="size" label={{ value: 'Response body size', position: 'insideBottomRight', offset: 0 }} minTickGap={20} />
             <YAxis label={{ value: 'Requests', angle: -90, position: 'insideLeft' }} />
             <Tooltip />
             <Legend />

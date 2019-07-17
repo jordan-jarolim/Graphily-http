@@ -138,7 +138,7 @@ const data = [{
 describe('chartsData', () => {
   test('rpm', async () => {
     const result = await requestPerMinute(data);
-    expect(result).toEqual([{ min: 0, rpm: 3 }, { min: 1, rpm: 5 }]);
+    expect(result).toEqual([{ min: '29-23:53', rpm: 3 }, { min: '29-23:54', rpm: 5 }]);
   });
   test('method', async () => {
     const result = await methodDistribution(data);
