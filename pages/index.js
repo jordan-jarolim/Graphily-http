@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Modal from '@material-ui/core/Modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -41,18 +40,6 @@ const Index = () => {
       {({ fetch, error, loading }) => {
         return (
           <Primary>
-            {/* <Modal open={loading || false}>
-              <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center"
-                style={{ minHeight: '100vh' }}
-              >
-                <CircularProgress className={classes.modalLoader} />
-              </Grid>
-            </Modal> */}
             <Container>
               <Box my={4} mt={6}>
                 <Typography variant="h3" component="h1" gutterBottom>

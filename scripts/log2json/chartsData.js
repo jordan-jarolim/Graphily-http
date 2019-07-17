@@ -5,15 +5,18 @@ const { promisify } = require('util');
 
 const readFileAsync = promisify(fs.readFile);
 
-const _readFile = async () => {
+const _readFile = async (data) => {
+  if (data) {
+    return data;
+  }
   const absoluteResultPath = path.resolve(__dirname, '../../static/result.json');
-  let data = await readFileAsync(absoluteResultPath, 'utf-8');
-  data = JSON.parse(data);
-  return data;
+  let fileData = await readFileAsync(absoluteResultPath, 'utf-8');
+  fileData = JSON.parse(fileData);
+  return fileData;
 };
 
-const requestPerMinute = async () => {
-  const data = await _readFile();
+const requestPerMinute = async (inputData) => {
+  const data = await _readFile(inputData);
   const result = [{ min: 0, rpm: 0 }];
   let currentTimestamp = data[0].datetime;
 
@@ -32,8 +35,8 @@ const requestPerMinute = async () => {
   return result;
 };
 
-const methodDistribution = async () => {
-  const data = await _readFile();
+const methodDistribution = async (inputData) => {
+  const data = await _readFile(inputData);
   const reducer = (acc, val) => {
     const newAcc = {
       ...acc,
@@ -60,13 +63,13 @@ const _universalReduceDistribution = (data, key) => {
   return result;
 };
 
-const codeDistribution = async () => {
-  const data = await _readFile();
+const codeDistribution = async (inputData) => {
+  const data = await _readFile(inputData);
   return _universalReduceDistribution(data, 'response_code');
 };
 
-const sizeDistribution = async () => {
-  let data = await _readFile();
+const sizeDistribution = async (inputData) => {
+  let data = await _readFile(inputData);
   data = data.filter((ln) => ln.response_code === '200' && parseInt(ln.document_size) < 1000);
   return _universalReduceDistribution(data, 'document_size');
 };
