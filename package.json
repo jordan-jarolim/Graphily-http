@@ -30,7 +30,7 @@
     "nanoid": "^2.0.3",
     "nanoid-dictionary": "^2.0.0",
     "next": "8.1.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.13.1",
     "printable-characters": "^1.0.42",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
